@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#111827" />
+  <meta name="description" content="Lua VM-style script locker — static GitHub Pages app" />
+  <title>Lua VM Locker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">LUA SCRIPT PROTECTION</div>
+        <h1>Lua VM Locker</h1>
+        <p>ล็อคสคริปต์ในเครื่อง แล้วสร้าง Lua ที่พร้อม Copy หรือบันทึกเป็นไฟล์</p>
+      </div>
+      <div class="badge">GitHub Pages Ready</div>
+    </header>
+
+    <section class="grid">
+      <section class="card editor-card">
+        <div class="card-head">
+          <div>
+            <h2>สคริปต์หลัก</h2>
+            <span>วางโค้ด Lua ของคุณตรงนี้</span>
+          </div>
+          <span id="inputStats" class="stats">0 lines · 0 chars</span>
+        </div>
+        <textarea id="source" spellcheck="false" placeholder="-- วาง Lua script ที่นี่\nprint('Hello')"></textarea>
+        <div class="row">
+          <label class="field">
+            <span>ชื่อสคริปต์</span>
+            <input id="scriptName" type="text" value="locked_script" maxlength="80" />
+          </label>
+          <label class="field">
+            <span>รหัสล็อค</span>
+            <div class="inline-input">
+              <input id="secret" type="text" placeholder="เว้นว่าง = สุ่มให้" maxlength="64" autocomplete="off" />
+              <button id="randomKey" class="ghost" type="button">สุ่ม</button>
+            </div>
+          </label>
+        </div>
+        <label class="field full">
+          <span>ขนาดชิ้นข้อมูล</span>
+          <input id="chunkSize" type="number" min="256" max="12000" step="256" value="4096" />
+          <small>จำนวนตัวอักษรต่อชิ้น ยิ่งใหญ่ยิ่งลดจำนวนบรรทัดของ output</small>
+        </label>
+        <div class="actions">
+          <button id="protect" class="primary" type="button">🔒 ปกปิดสคริป</button>
+          <button id="clear" class="secondary" type="button">ล้าง</button>
+        </div>
+      </section>
+
+      <section class="card output-card">
+        <div class="card-head">
+          <div>
+            <h2>สคริปต์ที่โดนล็อคแล้ว</h2>
+            <span>VM-style dispatcher + decode ครั้งเดียว + loadstring</span>
+          </div>
+          <span id="outputStats" class="stats">ยังไม่ได้สร้าง</span>
+        </div>
+        <textarea id="output" spellcheck="false" readonly placeholder="กด “ปกปิดสคริป” แล้ว output จะมาอยู่ตรงนี้"></textarea>
+        <div class="actions">
+          <button id="copy" class="primary" type="button" disabled>📋 Copy</button>
+          <button id="download" class="secondary" type="button" disabled>⬇️ บันทึก .lua</button>
+        </div>
+        <div id="status" class="status" aria-live="polite">พร้อมใช้งาน</div>
+      </section>
+    </section>
+
+    <section class="info card">
+      <h2>หมายเหตุ</h2>
+      <p>ตัวล็อคนี้เป็น VM-style wrapper สำหรับปกปิดซอร์สแบบ client-side ไม่ใช่ VM compiler เต็มรูปแบบของภาษา Lua ดังนั้นสคริปต์ Lua เดิมยังคงถูกโหลดและรันโดย runtime เดิมหลังถอดรหัส</p>
+      <p>เพราะโค้ดสุดท้ายต้องรันบนเครื่องของผู้ใช้ จึงไม่มีวิธีทำให้ Lua client-side ปลอดจากการแกะได้ 100% การป้องกันนี้เหมาะกับการเพิ่มความยากในการอ่าน/คัดลอก และหลีกเลี่ยงการ parse/interpret ทีละบรรทัดหลังเริ่มรันแล้ว</p>
+    </section>
+
+    <footer>by.BHK2_Mambo · static project · no server required</footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
